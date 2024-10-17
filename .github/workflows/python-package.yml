@@ -160,8 +160,8 @@ jobs:
        matrix:
         impl: [cpython, cffi]
         purity: [pure, with-pylmdb-mods]
-        # PYTHON: ["cp310-cp310"]
-        PYTHON: ["cp37-cp37m" , "cp38-cp38" , "cp39-cp39", "cp310-cp310", "cp311-cp311", 'cp312-cp312']
+        PYTHON: ["cp310-cp310"]
+        # PYTHON: ["cp37-cp37m" , "cp38-cp38" , "cp39-cp39", "cp310-cp310", "cp311-cp311", 'cp312-cp312']
     steps:
       - uses: actions/checkout@v2
       - run: |
@@ -226,7 +226,9 @@ jobs:
             matrix.purity == 'with-pylmdb-mods' && matrix.impl == 'cpython'
         with:
           python-versions: >-
-              cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312
+              cp310-cp310
+          # python-versions: >-
+          #     cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310 cp311-cp311 cp312-cp312
           build-requirements: 'patch-ng'
       - uses: actions/upload-artifact@v4
         if: >-
