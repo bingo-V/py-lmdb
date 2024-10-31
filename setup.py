@@ -106,6 +106,8 @@ if patch_lmdb_source:
         pass
     shutil.copytree('lib', dest)
 
+    print('dest:', dest)
+
     # Copy away the lmdb source then patch it
     if sys.platform.startswith('win'):
         patchfile = 'lib' + os.sep + 'py-lmdb' + os.sep + 'env-copy-txn.patch'
@@ -135,6 +137,8 @@ if not os.getenv('LMDB_MAINTAINER'):
 p = sys.version.find('MSC v.')
 msvc_ver = int(sys.version[p + 6: p + 10]) if p != -1 else None
 
+print('msvc_ver', msvc_ver)
+
 if sys.platform.startswith('win'):
     # If running on Visual Studio<=2010 we must provide <stdint.h>. Newer
     # versions provide it out of the box.
@@ -159,9 +163,12 @@ with open('lmdb/_config.py', 'w') as fp:
     ),))
 
 
+print('use_cpython: ', use_cpython)
+
 if use_cpython:
     print('py-lmdb: Using CPython extension; override with LMDB_FORCE_CFFI=1.')
     install_requires = []
+    print('memsink:', memsink)
     if memsink:
         extra_compile_args += ['-DHAVE_MEMSINK',
                                '-I' + os.path.dirname(memsink.__file__)]
@@ -182,6 +189,15 @@ else:
     except ImportError:
         sys.stderr.write('Could not import lmdb; ensure cffi is installed!\n')
         ext_modules = []
+
+print('extra_sources:', extra_sources)
+print('extra_compile_args:', extra_compile_args)
+print('libraries:', libraries)
+print('extra_include_dirs:', extra_include_dirs)
+print('extra_library_dirs:', extra_library_dirs)
+
+print('ext_modules:')
+print(ext_modules)
 
 def grep_version():
     path = os.path.join(os.path.dirname(__file__), 'lmdb/__init__.py')
