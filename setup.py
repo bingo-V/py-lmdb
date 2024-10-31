@@ -42,12 +42,16 @@ if hasattr(platform, 'python_implementation'):
 else:
     use_cpython = True
 
+print("os.getenv('LMDB_FORCE_CFFI')", os.getenv('LMDB_FORCE_CFFI'))
+
 if os.getenv('LMDB_FORCE_CFFI') is not None:
     use_cpython = False
 
 if (3, 0) < sys.version_info[:2] < (3, 5):
     sys.stderr.write('Error: py-lmdb requires at CPython 3.5\n')
     raise SystemExit(1)
+
+print('use_cpython', use_cpython)
 
 #
 # Figure out which LMDB implementation to use.
